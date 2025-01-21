@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id("com.github.bjornvester.wsdl2java") version "2.0.2"
+}
+
+group = 'com.soapservice'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+//    implementation 'com.sun.xml.ws:jaxws-ri:4.0.1'
+
+}
+
+
+wsdl2java {
+    cxfVersion.set("4.0.2") // Specifies the version of CXF to use
+    // Include the path to the WSDL file relative to the project directory
+    wsdlDir.set(layout.projectDirectory.dir("src/main/resources/wsdl"))
+    // Set the directory where the generated files will be stored
+    generatedSourceDir.set(layout.projectDirectory.dir("src/main/java/numbers"))
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.named('compileJava') {
+    dependsOn tasks.named('wsdl2java')
+}
