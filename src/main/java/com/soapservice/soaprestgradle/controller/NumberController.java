@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import wsdl.NumberToDollarsResponse;
 
 @RestController
 public class NumberController {
@@ -15,7 +16,7 @@ public class NumberController {
 
     @GetMapping(value = "/dollars", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getDollars(@RequestParam(name = "number") int number) {
-        com.dataaccess.webservicesserver.NumberToDollarsResponse dollars = numberClient.getDollars(number);
+        NumberToDollarsResponse dollars = numberClient.getDollars(number);
         return dollars.getNumberToDollarsResult();
     }
 }

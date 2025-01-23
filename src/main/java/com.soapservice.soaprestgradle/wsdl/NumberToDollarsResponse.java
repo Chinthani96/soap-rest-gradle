@@ -1,5 +1,5 @@
 
-package com.dataaccess.webservicesserver;
+package wsdl;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;

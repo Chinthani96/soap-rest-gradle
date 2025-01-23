@@ -1,45 +1,76 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.4.1'
-    id 'io.spring.dependency-management' version '1.1.7'
-    id("com.github.bjornvester.wsdl2java") version "2.0.2"
+    id 'org.springframework.boot' version '3.3.0'
+    id 'io.spring.dependency-management' version '1.1.5'
 }
 
-group = 'com.soapservice'
+group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+    sourceCompatibility = '21'
 }
+
+// set the directory for the wsdl stub generation
+ext.jaxwsSourceDir = "src/main/java/com.soapservice.soaprestgradle"
+
+// tag::configurations[]
+configurations {
+    jaxws
+}
+// end::configurations[]
 
 repositories {
     mavenCentral()
 }
 
+// tag::wsdl[]
+task wsimport {
+    description = 'Generate classes from wsdl using wsimport'
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web-services'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-//    implementation 'com.sun.xml.ws:jaxws-ri:4.0.1'
-
+    doLast {
+        project.mkdir(jaxwsSourceDir)
+        ant {
+            taskdef(name: 'wsimport',
+                    classname: 'com.sun.tools.ws.ant.WsImport',
+                    classpath: configurations.jaxws.asPath
+            )
+            wsimport(
+                    keep: true,
+                    destdir: jaxwsSourceDir,
+                    extension: "true",
+                    verbose: true,
+                    wsdl: "https://www.dataaccess.com/webservicesserver/NumberConversion.wso?wsdl",
+                    xnocompile: true,
+                    package: "wsdl") {
+                xjcarg(value: "-XautoNameResolution")
+            }
+        }
+    }
 }
 
+sourceSets {
+    main {
+        java.srcDirs += jaxwsSourceDir
+    }
+}
 
-wsdl2java {
-    cxfVersion.set("4.0.2") // Specifies the version of CXF to use
-    // Include the path to the WSDL file relative to the project directory
-    wsdlDir.set(layout.projectDirectory.dir("src/main/resources/wsdl"))
-    // Set the directory where the generated files will be stored
-    generatedSourceDir.set(layout.projectDirectory.dir("src/main/java/numbers"))
+compileJava {
+    dependsOn wsimport
+}
+// end::wsdl[]
+
+dependencies {
+// tag::dependency[]
+    implementation ('org.springframework.boot:spring-boot-starter-web-services')
+    jaxws 'com.sun.xml.ws:jaxws-tools:3.0.0',
+            'jakarta.xml.ws:jakarta.xml.ws-api:3.0.0',
+            'jakarta.xml.bind:jakarta.xml.bind-api:3.0.0',
+            'jakarta.activation:jakarta.activation-api:2.0.0',
+            'com.sun.xml.ws:jaxws-rt:3.0.0'
+// end::dependency[]
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-
-tasks.named('compileJava') {
-    dependsOn tasks.named('wsdl2java')
 }

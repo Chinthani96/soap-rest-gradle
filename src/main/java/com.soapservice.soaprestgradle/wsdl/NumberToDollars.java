@@ -1,12 +1,11 @@
 
-package com.dataaccess.webservicesserver;
+package wsdl;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 
 
@@ -20,7 +19,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       <sequence>
- *         <element name="ubiNum" type="{http://www.w3.org/2001/XMLSchema}unsignedLong"/>
+ *         <element name="dNum" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *       </sequence>
  *     </restriction>
  *   </complexContent>
@@ -31,37 +30,36 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "ubiNum"
+    "dNum"
 })
-@XmlRootElement(name = "NumberToWords")
-public class NumberToWords {
+@XmlRootElement(name = "NumberToDollars")
+public class NumberToDollars {
 
     @XmlElement(required = true)
-    @XmlSchemaType(name = "unsignedLong")
-    protected BigInteger ubiNum;
+    protected BigDecimal dNum;
 
     /**
-     * Gets the value of the ubiNum property.
+     * Gets the value of the dNum property.
      * 
      * @return
      *     possible object is
-     *     {@link BigInteger }
+     *     {@link BigDecimal }
      *     
      */
-    public BigInteger getUbiNum() {
-        return ubiNum;
+    public BigDecimal getDNum() {
+        return dNum;
     }
 
     /**
-     * Sets the value of the ubiNum property.
+     * Sets the value of the dNum property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigInteger }
+     *     {@link BigDecimal }
      *     
      */
-    public void setUbiNum(BigInteger value) {
-        this.ubiNum = value;
+    public void setDNum(BigDecimal value) {
+        this.dNum = value;
     }
 
 }

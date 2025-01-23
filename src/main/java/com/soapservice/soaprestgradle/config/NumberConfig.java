@@ -10,7 +10,7 @@ public class NumberConfig {
     @Bean
     public Jaxb2Marshaller marshaller() {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller.setContextPath("com.dataaccess.webservicesserver");
+        jaxb2Marshaller.setContextPath("wsdl");
         return jaxb2Marshaller;
     }
 

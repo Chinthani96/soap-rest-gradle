@@ -1,7 +1,6 @@
 
-package com.dataaccess.webservicesserver;
+package wsdl;
 
-import java.math.BigDecimal;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -19,7 +18,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       <sequence>
- *         <element name="dNum" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
+ *         <element name="NumberToWordsResult" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       </sequence>
  *     </restriction>
  *   </complexContent>
@@ -30,36 +29,36 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "dNum"
+    "numberToWordsResult"
 })
-@XmlRootElement(name = "NumberToDollars")
-public class NumberToDollars {
+@XmlRootElement(name = "NumberToWordsResponse")
+public class NumberToWordsResponse {
 
-    @XmlElement(required = true)
-    protected BigDecimal dNum;
+    @XmlElement(name = "NumberToWordsResult", required = true)
+    protected String numberToWordsResult;
 
     /**
-     * Gets the value of the dNum property.
+     * Gets the value of the numberToWordsResult property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link String }
      *     
      */
-    public BigDecimal getDNum() {
-        return dNum;
+    public String getNumberToWordsResult() {
+        return numberToWordsResult;
     }
 
     /**
-     * Sets the value of the dNum property.
+     * Sets the value of the numberToWordsResult property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link String }
      *     
      */
-    public void setDNum(BigDecimal value) {
-        this.dNum = value;
+    public void setNumberToWordsResult(String value) {
+        this.numberToWordsResult = value;
     }
 
 }
